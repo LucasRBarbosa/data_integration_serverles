@@ -1,0 +1,31 @@
+service: cortex
+
+provider:
+  name: aws
+  runtime: python3.8
+  region: us-east-1
+  role: 'arn:aws:iam::581577752758:role/service-role/main-role-t577tk16'
+  versionFunctions: false
+  # stage: production
+
+functions:
+  main:
+    handler: data_main.lambda_handler
+    environment:
+    package:
+      include:
+        - main/main_serverless.py
+    events:
+      - http:
+          path: /resources
+          method: GET
+
+  submain:
+    handler: data_submain.submain_handler
+    environment:
+  
+    # package:
+    #   include:
+    #     - submain/main_serverless.py
+# resources:
+#   Resources: cloudformation-resources.yml
